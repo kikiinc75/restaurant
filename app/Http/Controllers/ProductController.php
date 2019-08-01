@@ -100,7 +100,6 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        echo "ok";
         $this->validate($request, [
             'name' => 'required',
             'price' => 'required|integer',
