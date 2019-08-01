@@ -56,7 +56,7 @@
                                 <tr>
                                     <td>
                                         @if($product->image)
-                                        <img src="{{url('')}}/storage/product/{{$product->image}}" style="height: 50px">
+                                        <img src="{{url('uploads/file/'.$product->image)}}" style="height: 50px">
                                         @endif
                                     </td>
                                     <td>{{$product->name}}</td>

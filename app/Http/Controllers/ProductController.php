@@ -56,9 +56,11 @@ class ProductController extends Controller
 
         //upload file to storage
         if ($request->file('image') != null) {
-            $path = $request->file('image')->storeAs('public/product', $product->id . '.jpeg');
-            # code...
-            $product->image = $product->id . '.jpeg';
+            $file = $request->file('image');
+            $ext = $file->getClientOriginalExtension();
+            $newName = rand(100000, 1001238912) . "." . $ext;
+            $file->move('uploads/file', $newName);
+            $product->image = $newName;
             $product->save();
         }
 
