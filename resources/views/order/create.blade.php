@@ -26,7 +26,11 @@
                     @foreach ($products as $product)
                     <div class="col-6 col-lg-3">
                         <div class="card">
-                            <img class="card-img-top" src="{{url('uploads/file/'.$product->image)}}" alt="{{$product->name}}">
+                            @if($product->image)
+                            <img class="card-img-top" src="{{url('uploads/file/'.$product->image)}}" alt="{{$product->name}}" style="height: 200px">
+                            @else
+                            <img class="card-img-top" src="{{url('uploads/file/default.jpg')}}" alt="{{$product->name}}" style="height: 200px">
+                            @endif
                             <div class="card-body">
                                 <h5 class="card-title">{{$product->name}}</h5>
                                 <p class="card-text">Harga : {{$product->price}}</p>

@@ -82,6 +82,7 @@
                                 <table id="table-product" class="table table-striped table-bordered">
                                     <thead>
                                         <tr>
+                                            <th>images</th>
                                             <th>Nama</th>
                                             <th>Banyak</th>
                                             <th>Harga</th>
@@ -92,7 +93,17 @@
         
                                         @foreach ( $order->item as $order )
                                         <tr>
-                                            <td class="pr-5">{{$order->product->name}}</td>
+                                            <td>
+
+                                                @if($order->product->image)
+                                                <img src="{{url('uploads/file/'.$order->product->image)}}" alt="{{$order->product->name}}" style="height: 50px">
+                                                @else
+                                                <img src="{{url('uploads/file/default.jpg')}}" alt="{{$order->product->name}}" style="height: 50px">
+                                                @endif
+                                            </td>
+                                            <td class="pr-5">
+                                                {{$order->product->name}}
+                                            </td>
                                             <td class="pr-5">{{$order->qty}}</td>
                                             <td class="pr-5">{{$order->product->price}}</td>
                                             <td>

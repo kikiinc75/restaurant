@@ -57,6 +57,8 @@
                                     <td>
                                         @if($product->image)
                                         <img src="{{url('uploads/file/'.$product->image)}}" style="height: 50px">
+                                        @else
+                                        <img src="{{url('uploads/file/default.jpg')}}" style="height: 50px">
                                         @endif
                                     </td>
                                     <td>{{$product->name}}</td>
