@@ -13,7 +13,7 @@
 <div class="page-breadcrumb">
     <div class="row">
         <div class="col-12 d-flex no-block align-items-center">
-            <h4 class="page-title">Categories</h4>
+            <h4 class="page-title">Order Active</h4>
             <div class="ml-auto text-right">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
@@ -72,17 +72,20 @@
                                         @endif
                                     </td>
                                     <td>
+                                        @if (Auth::user()->level=='kasir')
                                         <form action='{{url("order/$order->id")}}' method="POST">
                                             @method("delete")
                                             @csrf
-                                            <button class="btn btn-primary" onClick="return confirm('yakin ?')">Batalkan Pesanan</button>
+                                            <button class="btn btn-danger" onClick="return confirm('yakin ?')">Batalkan Pesanan</button>
                                         </form>
                                         &nbsp
-                                        <a href='{{url("order/$order->id")}}'>
-                                            <button class="btn btn-success">Detail</button>
-                                        </a>
                                         <a href='{{url("order/$order->id/edit")}}'>
                                             <button class="btn btn-info">Pembayaran</button>
+                                        </a>
+                                        &nbsp
+                                        @endif
+                                        <a href='{{url("order/$order->id")}}'>
+                                            <button class="btn btn-success">Detail</button>
                                         </a>
                                     </td>
                                 </tr>

@@ -15,6 +15,8 @@ Route::get('/', function () {
 });
 Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
+    // Route::get('register', 'Auth\AuthController@showRegistrationForm');
+    // Route::post('register', 'Auth\AuthController@register');
     Route::get('/home', 'HomeController@index')->name('home');
     Route::resource('table', 'TableController')->middleware('kasir')->except([
         'show'
@@ -25,11 +27,25 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('product', 'ProductController')->except([
         'show'
     ]);
-    Route::get('log', 'LogController@index');
-    Route::resource('order', 'OrderController');
+    // order
+    // Route::resource('order', 'OrderController');
+    Route::group(['middleware' => 'pelayan'], function () {
+        Route::get('/order/create', 'OrderController@create')->name('order.create');
+        Route::post('/order', 'OrderController@store')->name('order.store');
+    });
+    Route::get('log', 'LogController@index')->name('log.index');
+    Route::get('/order', 'OrderController@index')->name('order.index');
+    Route::get('/order/{order}', 'OrderController@show')->name('order.show');
+    Route::group(['middleware' => 'kasir'], function () {
+        Route::get('/order/{id}/edit', 'OrderController@edit')->name('order.edit');
+        Route::put('/order/{id}', 'OrderController@update')->name('order.update');
+        Route::delete('/order/{id}', 'OrderController@destroy')->name('order.destroy');
+    });
     Route::resource('item', 'ItemController')->except([
         'index', 'show', 'create'
     ]);
+
+    // endorder
     Route::prefix('api')->group(function () {
         Route::get('/cart', 'CartController@getCart');
         Route::post('/cart', 'CartController@addToCart');

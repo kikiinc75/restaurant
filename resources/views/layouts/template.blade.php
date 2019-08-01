@@ -259,11 +259,16 @@
 
                     <ul id="sidebarnav" class="p-t-30">
                         <li class="sidebar-item"> <a class="ajax waves-effect waves-dark sidebar-link" href="{{url('home')}}" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span></a></li>
+                        @if(Auth::user()->level == 'kasir')
+                        <li class="sidebar-item"><a class="waves-effect waves-dark sidebar-link" href="{{ route('register') }}" aria-expanded="false"><i class="mdi mdi-border-inside"></i><span class="hide-menu">New User</span></a></li>
                         <li class="sidebar-item"> <a class="ajax waves-effect waves-dark sidebar-link" href="{{url('table')}}" aria-expanded="false"><i class="mdi mdi-border-inside"></i><span class="hide-menu">Table</span></a></li>
                         <li class="sidebar-item"> <a class="ajax waves-effect waves-dark sidebar-link" href="{{url('categorie')}}" aria-expanded="false"><i class="mdi mdi-border-inside"></i><span class="hide-menu">Categorie</span></a></li>
+                        @endif
                         <li class="sidebar-item"> <a class="ajax waves-effect waves-dark sidebar-link" href="{{url('product')}}" aria-expanded="false"><i class="mdi mdi-border-inside"></i><span class="hide-menu">Product</span></a></li>
                         <li class="sidebar-item"> <a class="ajax waves-effect waves-dark sidebar-link" id="menu-sale" href="{{url('order')}}" aria-expanded="false"><i class="mdi mdi-border-inside"></i><span class="hide-menu">Order</span></a></li>
+                        @if(Auth::user()->level=='pelayan')
                         <li class="sidebar-item"> <a class="ajax waves-effect waves-dark sidebar-link" id="menu-sale" href="{{url('order/create')}}" aria-expanded="false"><i class="mdi mdi-border-inside"></i><span class="hide-menu">Transaction</span></a></li>
+                        @endif
                         <li class="sidebar-item"> <a class="ajax waves-effect waves-dark sidebar-link" href="{{url('log')}}" aria-expanded="false"><i class="mdi mdi-border-inside"></i><span class="hide-menu">Log Activity</span></a></li>
                         <!-- <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-receipt"></i><span class="hide-menu">Forms </span></a>
                             <ul aria-expanded="false" class="collapse  first-level">
@@ -362,6 +367,10 @@
     <script src="{{asset('vendor/libs/flot/jquery.flot.crosshair.js')}}"></script>
     <script src="{{asset('vendor/libs/flot.tooltip/js/jquery.flot.tooltip.min.js')}}"></script>
     <script src="{{asset('vendor/js/pages/chart/chart-page-init.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
+    <!-- Include this after the sweet alert js file -->
+    @include('sweet::alert')
     @yield('js')
 </body>
 

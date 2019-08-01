@@ -16,8 +16,8 @@ class Kasir
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->level == 'Pelayan') {
-            return redirect('home');
+        if (Auth::user()->level == 'pelayan') {
+            return redirect('home')->with('errors', 'Access Denied!');
         }
         return $next($request);
     }

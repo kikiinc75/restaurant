@@ -78,8 +78,8 @@
                                 Pay
                             </label>
                             <div class="col-sm-9">
-                                <input type="number" class="form-control @error('price') error @enderror" id="pay" name="price" placeholder="price" value="" autocomplete="off">
-                                @error("price")
+                                <input type="number" class="form-control @error('pay') error @enderror" id="pay" name="pay" placeholder="pay" value="" autocomplete="off">
+                                @error("pay")
                                 <div class="badge badge-danger">{{$message}}</div>
                                 @enderror
                             </div>

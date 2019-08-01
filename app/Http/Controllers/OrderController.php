@@ -83,6 +83,7 @@ class OrderController extends Controller
         $table = Table::where('id', $order->table_id)->first();
         $table->status = 0;
         $table->save();
+        Log::desc('menambah order baru '  . $newOrder->order_number);
 
         return back();
     }
@@ -121,6 +122,10 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'pay' => 'required|integer',
+        ]);
+
         $order = Order::find($id);
         $order->status = 0;
         $order->save();
@@ -128,6 +133,7 @@ class OrderController extends Controller
         $table = Table::where('id', $order->table_id)->first();
         $table->status = 1;
         $table->save();
+        Log::desc('menerima pembayaran order '  . $order->order_number);
 
         return redirect('order');
     }
@@ -143,6 +149,8 @@ class OrderController extends Controller
         $table = Table::where('id', $order->table_id)->first();
         $table->status = 1;
         $table->save();
+
+        Log::desc('membatalkan orderan '  . $order->order_number);
         $order->delete();
         return back();
     }

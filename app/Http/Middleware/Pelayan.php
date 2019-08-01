@@ -17,7 +17,7 @@ class Pelayan
     public function handle($request, Closure $next)
     {
         if (Auth::user()->level == 'kasir') {
-            return redirect('home');
+            return redirect('home')->with('errors', 'Access Denied!');
         }
         return $next($request);
     }

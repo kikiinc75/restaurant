@@ -69,7 +69,7 @@ class ItemController extends Controller
         $order->save();
 
         Session::flash("success", "berhasil menambah data");
-        Log::desc('menambah order '  . $item->product->name);
+        Log::desc('menambah product '  . $item->product->name . ' ke nomor pesan ' . $order->order_number);
 
         return redirect()->to('/order/' . $item->order_id);
     }
@@ -124,7 +124,7 @@ class ItemController extends Controller
         $order->save();
 
         Session::flash("success", "berhasil merubah data");
-        Log::desc('mengubah order ' . $request->input('number') . ' ' . $item->product->name);
+        Log::desc('mengubah pesanan ' . $item->product->name . ' ' . $request->input('number'));
 
         return redirect()->to('/order/' . $item->order_id);
     }
@@ -150,7 +150,7 @@ class ItemController extends Controller
         $order->save();
 
         Session::flash("success", "berhasil menghapus data");
-        Log::desc('menghapus order ' . $item->order->order_number . ' ' . $item->product->name);
+        Log::desc('menghapus pesanan ' . $item->order->order_number . ' ' . $item->product->name);
 
         return redirect()->to('/order/' . $item->order_id);
     }
