@@ -10,6 +10,7 @@ use App\Cart;
 use App\Table;
 use App\OrderItem;
 use App\Log;
+use Session;
 
 class OrderController extends Controller
 {
@@ -45,7 +46,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'table_id' => 'required|integer',
+            'table' => 'required|integer',
         ]);
 
         $carts = Cart::where('user_id', Auth::user()->id)->get();
@@ -58,7 +59,7 @@ class OrderController extends Controller
         // Order
         $order = new Order;
         $order->user_id = Auth::user()->id;
-        $order->table_id = $request->input('table_id');
+        $order->table_id = $request->input('table');
         $order->order_number = 0;
         $order->total_price = $total;
         $order->save();
@@ -85,6 +86,7 @@ class OrderController extends Controller
         $table->status = 0;
         $table->save();
         Log::desc('menambah order baru '  . $newOrder->order_number);
+        Session::flash("success", "berhasil menambah order");
 
         return back();
     }
@@ -135,6 +137,7 @@ class OrderController extends Controller
         $table->status = 1;
         $table->save();
         Log::desc('menerima pembayaran order '  . $order->order_number);
+        Session::flash("success", "berhasil melakukan pembayaran");
 
         return redirect('order');
     }
@@ -153,6 +156,8 @@ class OrderController extends Controller
         $table->save();
 
         Log::desc('membatalkan orderan '  . $order->order_number);
+        Session::flash("success", "berhasil membatalkan orderan");
+
         $order->delete();
         return back();
     }

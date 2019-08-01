@@ -19,7 +19,7 @@
                 @endif
 
                 @if ( Session::has("success"))
-                <div class="alert alert-success">{{Session::get("success")}}</div>
+                <div class="alert alert-success mb-2">{{Session::get("success")}}</div>
                 @endif
 
                 <div class="row">
@@ -84,7 +84,7 @@
                         </label>
                         <div class="col-sm-5">
 
-                            <select name="table_id" id="table_id" class="form-control">
+                            <select name="table" id="table_id" class="form-control">
                                 @forelse ($tables as $table)
                                 <option value="{{$table->id}}">{{$table->name}}</option>
                                 @empty
