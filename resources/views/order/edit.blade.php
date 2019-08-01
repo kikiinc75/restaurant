@@ -24,7 +24,7 @@
                 @if ( Session::has("success"))
                 <div class="alert alert-success">{{Session::get("success")}}</div>
                 @endif
-                <form class="form-horizontal" method="POST" action="{{url('pay')}}/{{$order->id}}">
+                <form class="form-horizontal" method="POST" action="{{url('order')}}/{{$order->id}}">
                     @csrf
                     @method('PUT')
                     <div class="card-body">
@@ -67,7 +67,7 @@
                                 Price
                             </label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control @error('price') error @enderror" id="price" name="price" placeholder="price" value="{{$order->total_price}}" readonly>
+                                <input type="number" class="form-control @error('price') error @enderror" id="price" name="price" placeholder="price" value="{{$order->total_price}}" readonly>
                                 @error("price")
                                 <div class="badge badge-danger">{{$message}}</div>
                                 @enderror
@@ -78,7 +78,7 @@
                                 Pay
                             </label>
                             <div class="col-sm-9">
-                                <input type="number" class="form-control @error('price') error @enderror" id="pay" name="price" placeholder="price" value="">
+                                <input type="number" class="form-control @error('price') error @enderror" id="pay" name="price" placeholder="price" value="" autocomplete="off">
                                 @error("price")
                                 <div class="badge badge-danger">{{$message}}</div>
                                 @enderror
@@ -122,8 +122,8 @@
     $(document).ready(function () {
         $(".submit").prop("disabled", true);
         $('#pay').keyup(function(){
-            pay = $('#pay').val();
-            price = $('#price').val();
+            pay = parseInt($('#pay').val());
+            price = parseInt($('#price').val());
             if (pay>=price) {
                 $(".submit").prop("disabled", false);
             } else {

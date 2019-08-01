@@ -10,4 +10,8 @@ class Product extends Model
     {
         return $this->belongsTo("App\Categorie");
     }
+    public function orderitem()
+    {
+        return $this->hasMany('App\OrderItem');
+    }
 }

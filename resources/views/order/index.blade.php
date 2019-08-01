@@ -65,23 +65,23 @@
                                     <td class="pr-5">{{$order->order_number}}</td>
                                     <td class="pr-5">{{$order->user->name}}</td>
                                     <td class="pr-5">{{$order->table->name}}</td>
-                                    <td class="pr-5">{{$order->total_price}}</td>
+                                    <td class="price">{{$order->total_price}}</td>
                                     <td class="pr-5">
                                         @if($order->status==1)
                                         Menunggu Bayar
                                         @endif
                                     </td>
                                     <td>
-                                        <form action='{{url("")}}' method="POST">
+                                        <form action='{{url("order/$order->id")}}' method="POST">
                                             @method("delete")
                                             @csrf
                                             <button class="btn btn-primary" onClick="return confirm('yakin ?')">delete</button>
                                         </form>
                                         &nbsp
-                                        <a href='{{url("transaction/$order->id")}}'>
-                                            <button class="btn btn-success">Edit</button>
+                                        <a href='{{url("order/$order->id")}}'>
+                                            <button class="btn btn-success">Detail</button>
                                         </a>
-                                        <a href='{{url("pay/$order->id")}}'>
+                                        <a href='{{url("order/$order->id/edit")}}'>
                                             <button class="btn btn-info">Pembayaran</button>
                                         </a>
                                     </td>
@@ -90,10 +90,7 @@
 
                             </tbody>
                         </table>
-
                         {{$orders->links()}}
-
-
                     </div>
 
                 </div>
@@ -101,5 +98,4 @@
         </div>
     </div>
 </div>
-
 @endsection

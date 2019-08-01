@@ -12,45 +12,6 @@ use App\OrderItem;
 
 class OrderController extends Controller
 {
-    public function apiMakanan()
-    {
-        $products = Product::where('status', 1)->get();
-        return response()->json($products);
-    }
-    public function getCart()
-    {
-        $array = [];
-        $cart = Cart::where('user_id', Auth::id())->orderBy('id', 'desc')->get();
-        foreach ($cart as $data) {
-            $array[] = array("id" => $data->id, "product" => $data->product->name, "price" => $data->product->price, "qty" => $data->qty);
-        }
-        return response()->json($array);
-    }
-    public function addToCart(Request $request)
-    {
-        $user = $request->input("user_id");
-        $product_id = $request->input("product_id");
-        $cart = Cart::where('user_id', $user)->where('product_id', $product_id)->first();
-        if ($cart) {
-            // Update input qty
-            $cart->qty = $cart->qty + 1;
-            $product = $cart->product_id;
-        } else {
-            // Input new Cart
-            $cart = new Cart;
-            $cart->user_id = $user;
-            $product = $cart->product_id = $product_id;
-            $cart->qty = 1;
-        }
-        $cart->save();
-        $array = array("product_id" => $product_id);
-        return response()->json($array);
-    }
-    public function removeCart($id)
-    {
-        $cart = Cart::find($id);
-        $cart->delete();
-    }
     /**
      * Display a listing of the resource.
      *
@@ -59,7 +20,7 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::where('status', 1)->paginate(10);
-        return view('order.active', compact('orders'));
+        return view('order.index', compact('orders'));
     }
 
     /**
@@ -71,7 +32,7 @@ class OrderController extends Controller
     {
         $tables = Table::where('status', 1)->get();
         $products = Product::where('status', 1)->get();
-        return view('order.add', compact('products', 'tables'));
+        return view('order.create', compact('products', 'tables'));
     }
 
     /**
@@ -82,12 +43,23 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'table_id' => 'required|integer',
+        ]);
+
+        $carts = Cart::where('user_id', Auth::user()->id)->get();
+
+        $total = 0;
+        foreach ($carts as $cart) {
+            $total = $total + ($cart->qty * $cart->product->price);
+        }
+
         // Order
         $order = new Order;
         $order->user_id = Auth::user()->id;
         $order->table_id = $request->input('table_id');
         $order->order_number = 0;
-        $order->total_price = $request->input('total_price');
+        $order->total_price = $total;
         $order->save();
 
         //perintah update
@@ -95,7 +67,7 @@ class OrderController extends Controller
         $newOrder->order_number = ('ERP' . date('dmY') . '-' . $order->id);
         $newOrder->save();
 
-        $carts = Cart::where('user_id', Auth::user()->id)->get();
+        // menambah Daftar cart ke OrderItem
         foreach ($carts as $cart) {
             $item = new OrderItem;
             $item->order_id = $order->id;
@@ -104,11 +76,14 @@ class OrderController extends Controller
             $item->save();
         }
 
+        // Delete Cart setelah dimasukkan ke OrderItem
         $oldcart = Cart::where('user_id', Auth::user()->id);
         $oldcart->delete();
+
         $table = Table::where('id', $order->table_id)->first();
         $table->status = 0;
         $table->save();
+
         return back();
     }
 
@@ -121,7 +96,8 @@ class OrderController extends Controller
     public function show($id)
     {
         $order = Order::find($id);
-        return view('order.show', compact('order'));
+        $products = Product::where('status', 1)->get();
+        return view('order.show', compact('order', 'products', 'id'));
     }
 
     /**
@@ -133,7 +109,7 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order = Order::find($id);
-        return view('order.pay', compact('order'));
+        return view('order.edit', compact('order'));
     }
 
     /**
@@ -153,7 +129,7 @@ class OrderController extends Controller
         $table->status = 1;
         $table->save();
 
-        return redirect('home');
+        return redirect('order');
     }
 
     /**
@@ -164,6 +140,10 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        //
+        $table = Table::where('id', $order->table_id)->first();
+        $table->status = 1;
+        $table->save();
+        $order->delete();
+        return back();
     }
 }

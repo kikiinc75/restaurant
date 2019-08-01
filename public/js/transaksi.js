@@ -19,7 +19,6 @@ function getIndex() {
             $(".checkout").prop("disabled", true);
         } else {
             $(".checkout").prop("disabled", false);
-            $("#total").val(`${total}`)
         }
         $('.header').prepend(`<div class="d-inline total">Total : ${total}</div>`);
         $(".remove").click(function () {
