@@ -9,6 +9,7 @@ use Auth;
 use App\Cart;
 use App\Table;
 use App\OrderItem;
+use App\Log;
 
 class OrderController extends Controller
 {
@@ -144,8 +145,9 @@ class OrderController extends Controller
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Order $order)
+    public function destroy($id)
     {
+        $order = Order::find($id);
         $table = Table::where('id', $order->table_id)->first();
         $table->status = 1;
         $table->save();

@@ -110,7 +110,7 @@
                     <div class="border-top">
                             <div class="card-body">
                                 <button type="submit" class="btn btn-primary submit">Submit</button>
-                                <a href="{{url('table')}}" class="btn btn-success">Back</a>
+                                <a href="{{url('order')}}" class="btn btn-success">Back</a>
                             </div>
                         </div>
                     </form>
