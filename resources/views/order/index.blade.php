@@ -75,7 +75,7 @@
                                         <form action='{{url("order/$order->id")}}' method="POST">
                                             @method("delete")
                                             @csrf
-                                            <button class="btn btn-primary" onClick="return confirm('yakin ?')">delete</button>
+                                            <button class="btn btn-primary" onClick="return confirm('yakin ?')">Batalkan Pesanan</button>
                                         </form>
                                         &nbsp
                                         <a href='{{url("order/$order->id")}}'>

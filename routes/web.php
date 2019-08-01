@@ -16,10 +16,10 @@ Route::get('/', function () {
 Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::resource('table', 'TableController')->except([
+    Route::resource('table', 'TableController')->middleware('kasir')->except([
         'show'
     ]);
-    Route::resource('categorie', 'CategorieController')->except([
+    Route::resource('categorie', 'CategorieController')->middleware('kasir')->except([
         'show'
     ]);
     Route::resource('product', 'ProductController')->except([
