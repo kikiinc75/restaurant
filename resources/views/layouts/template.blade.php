@@ -142,7 +142,12 @@
                         <!-- ============================================================== -->
                         <!-- Comment -->
                         <!-- ============================================================== -->
-                        <!-- <li class="nav-item dropdown">
+                        <li class="nav-item">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" style="font-size:20px"> 
+                                {{Auth::user()->level}}
+                            </a>
+                        </li>
+                        {{-- <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-bell font-24"></i>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -151,7 +156,7 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Something else here</a>
                             </div>
-                        </li> -->
+                        </li> --}}
                         <!-- ============================================================== -->
                         <!-- End Comment -->
                         <!-- ============================================================== -->
@@ -235,7 +240,7 @@
 
 
                                 <div class="dropdown-divider"></div>
-                                <div class="p-l-30 p-10"><a href="javascript:void(0)" class="btn btn-sm btn-success btn-rounded">View Profile</a></div>
+                                <div class="p-l-30 p-10"><a href="javascript:void(0)" class="btn btn-sm btn-success btn-rounded">View Profile</a> {{Auth::user()->name}}-{{Auth::user()->level}}</div>
                             </div>
                         </li>
                         <!-- ============================================================== -->
