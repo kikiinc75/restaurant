@@ -18,6 +18,16 @@ class DatabaseSeeder extends Seeder
             'email' => 'wahyuiqbal91@gmail.com',
             'password' => bcrypt('password'),
             'level' => 'kasir',
+        ], [
+            'name' => 'kasir',
+            'email' => 'kasir@gmail.com',
+            'password' => bcrypt('password'),
+            'level' => 'kasir',
+        ], [
+            'name' => 'pelayan',
+            'email' => 'pelayan@gmail.com',
+            'password' => bcrypt('password'),
+            'level' => 'pelayan',
         ]);
     }
 }
