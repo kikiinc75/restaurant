@@ -9,12 +9,12 @@
 <div class="page-breadcrumb">
     <div class="row">
         <div class="col-12 d-flex no-block align-items-center">
-            <h4 class="page-title">List Product</h4>
+            <h4 class="page-title">List Table</h4>
             <div class="ml-auto text-right">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">List Product</li>
+                        <li class="breadcrumb-item active" aria-current="page">List Table</li>
                     </ol>
                 </nav>
             </div>
@@ -28,7 +28,7 @@
                 <div class="card-body">
 
                     <a href="{{url('table/create')}}">
-                        <button class="btn btn-success">New Product</button>
+                        <button class="btn btn-success">New Table</button>
                     </a><br><br>
 
                     @if ( Session::has("success") )
